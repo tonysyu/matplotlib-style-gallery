@@ -1,0 +1,2 @@
+IMAGE_EXT = '.png'
+IMAGE_PATTERN = '*' + IMAGE_EXT

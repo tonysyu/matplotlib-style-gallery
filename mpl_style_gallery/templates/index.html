@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+  <h1> Matplotlib Style Gallery </h1>
+
+  <table>
+
+      <thead>
+        <tr>
+          <th>Style</th>
+
+          {% for name in plot_names %}
+            <th> {{ name }} </th>
+          {% endfor %}
+
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for label, cells in gallery_rows %}
+          <tr>
+            <td> {{ label }} </td>
+            {% for image in cells %}
+              <td>
+                <a href="{{ image.url }}">
+                  <img src={{ image.thumbnail }} alt={{ image.alt }}J>
+                </a>
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+
+  </table>
+
+{% endblock %}

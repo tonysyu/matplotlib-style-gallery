@@ -2,6 +2,7 @@
 import os
 
 import flask
+from flask import request
 
 from .build import build_gallery_table
 from .path_utils import in_directory
@@ -15,37 +16,42 @@ class GalleryApp(object):
 
     def __init__(self):
         self._app = flask.Flask(__name__)
-        self._route_css_files()
-        self._route_build_files()
+        self._template = 'index.html'
+        self._plot_names, self._gallery_table = build_gallery_table()
+        self._input_status = ''
+        self._input_stylesheets = []
 
-    def _route_css_files(self):
-        url = '/static/css/<path:filename>'
+        self._add_url_rules(self._app)
 
+    def _add_url_rules(self, app):
+
+        @app.route('/static/css/<path:filename>')
         def route_css_files(filename):
             return flask.send_from_directory('static/css', filename)
-        self._app.add_url_rule(url, view_func=route_css_files)
 
-    def _route_build_files(self):
-        url = '/images/<path:filename>'
-
+        @app.route('/images/<path:filename>')
         def route_build_files(filename):
             return flask.send_from_directory('build/images', filename)
-        self._app.add_url_rule(url, view_func=route_build_files)
 
-    def render(self, plot_names, table, url='/', template='index.html'):
-        """Render the gallery.
-        """
-        def _render():
-            return flask.render_template(template, column_headers=plot_names,
-                                         gallery_table=table)
-        self._app.add_url_rule(url, view_func=_render)
+        @app.route('/')
+        def render():
+            return self.render()
+
+        @app.route('/', methods=['POST'])
+        def update_styles():
+            text = request.form['input-stylesheet']
+            self._input_status = text
+            return self.render()
+
+    def render(self):
+        return flask.render_template(self._template,
+                                     input_status=self._input_status,
+                                     column_headers=self._plot_names,
+                                     gallery_table=self._gallery_table)
 
     def run(self):
-        plot_names, table = build_gallery_table()
-        self.render(plot_names, table)
-
-        # App opens in the package root since image paths in the table are relative
-        # to the package root.
+        # App opens in the package root since image paths in the table are
+        # relative to the package root.
         with in_directory(local_dir):
             open_app(self._app)
 

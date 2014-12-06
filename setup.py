@@ -6,8 +6,6 @@ package_name = 'mpl_style_gallery'
 info = {}
 execfile(join(package_name, '__init__.py'), info)
 
-main_entry_point = '{}.app:main'.format(package_name)
-
 
 setup(
     name=package_name,
@@ -19,11 +17,6 @@ setup(
     description='Gallery for Matplotlib stylesheets',
     include_package_data=True,
     install_requires=[],
-    entry_points={
-        'console_scripts': [
-            'start-mpl-style-gallery = {}'.format(main_entry_point),
-        ]
-    },
     license='BSD',
     packages=find_packages(),
 )

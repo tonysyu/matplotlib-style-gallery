@@ -19,7 +19,7 @@ from .constants import IMAGE_EXT
 from .path_utils import disk, base_filename
 
 
-def save_all_plots(style_name, image_ext=IMAGE_EXT):
+def save_plots(style_name, image_ext=IMAGE_EXT):
     style_dir = pth.join(disk.images_dir, style_name)
     if not pth.exists(style_dir):
         os.makedirs(style_dir)
@@ -32,13 +32,9 @@ def save_all_plots(style_name, image_ext=IMAGE_EXT):
             plt.close('all')
 
 
-def main():
+def save_all_plots():
     # Only show styles defined by package, not by user.
     for style_name in style.available:
         print("Creating plots for style: {}".format(style_name))
-        save_all_plots(style_name)
+        save_plots(style_name)
     print("\nDone.")
-
-
-if __name__ == '__main__':
-    main()

@@ -4,7 +4,8 @@ from contextlib import contextmanager
 from fnmatch import fnmatch
 from glob import glob
 
-from constants import IMAGE_PATTERN
+from .constants import IMAGE_PATTERN
+
 
 @contextmanager
 def in_directory(path):

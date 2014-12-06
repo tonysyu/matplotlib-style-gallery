@@ -8,6 +8,7 @@ from __future__ import print_function
 
 import os
 import os.path as pth
+from collections import namedtuple
 
 import matplotlib as mpl
 mpl.use('Agg')
@@ -17,6 +18,9 @@ from matplotlib import style
 
 from .constants import IMAGE_EXT
 from .path_utils import disk, base_filename
+
+
+Cell = namedtuple('Cell', ['url', 'thumbnail', 'alt'])
 
 
 def save_plots(style_name, image_ext=IMAGE_EXT):
@@ -38,3 +42,21 @@ def save_all_plots():
         print("Creating plots for style: {}".format(style_name))
         save_plots(style_name)
     print("\nDone.")
+
+
+def build_gallery_table():
+    """Return plot-names and table of images.
+
+    Each row of the table starts with the style name, and followed by `Cell`
+    instances, which have `url`, `thumbnail`, and `alt` attributes.
+    """
+    table = []
+    for style_name, image_list in disk.iter_image_sets():
+        # XXX: `thumbnail` is actually not a thumbnail.
+        #      Rescaling would improve loading times.
+        image_cells = [Cell(url=path, thumbnail=path, alt='image')
+                       for path in image_list]
+        table.append([style_name, image_cells])
+
+    plot_names = disk.get_plot_names()
+    return plot_names, table

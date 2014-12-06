@@ -10,7 +10,7 @@
         <tr>
           <th>Style</th>
 
-          {% for name in plot_names %}
+          {% for name in column_headers %}
             <th> {{ name }} </th>
           {% endfor %}
 
@@ -18,7 +18,7 @@
       </thead>
 
       <tbody>
-        {% for label, cells in gallery_rows %}
+        {% for label, cells in gallery_table %}
           <tr>
             <td> {{ label }} </td>
             {% for image in cells %}

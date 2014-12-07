@@ -8,12 +8,15 @@
     <input type="text"
            name="input-stylesheet"
            placeholder="URL for stylesheet">
-    <input type="submit" name="stylesheet-form" value="Add stylesheet">
+    <input type="submit"
+           name="stylesheet-form"
+           value="Add stylesheet"
+           onclick="var spinner = new Spinner({}).spin(document.body);">
   </form>
 
   <p> {{ input_status }} </p>
 
-  <table>
+  <table id='gallery'>
     <thead>
       <tr>
         <th>Style</th>
@@ -41,5 +44,7 @@
     </tbody>
 
   </table>
+
+  <script src="static/js/spin.min.js"></script>
 
 {% endblock %}

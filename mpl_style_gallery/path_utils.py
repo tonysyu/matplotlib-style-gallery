@@ -24,20 +24,33 @@ def filter_image_files(files):
 
 
 class DiskLayout(object):
-    """On-disk directory structure for this project."""
+    """On-disk directory structure for this project.
+
+    Attributes
+    ----------
+    scripts_dir : str
+        Directory where plot scripts are stored.
+    images_dir : str
+        Directory where plot images are stored.
+    scratch_dir : str
+        Directory where user-added plot images are stored.
+    """
 
     def __init__(self):
-        local_dir = pth.dirname(os.path.abspath(__file__))
-        self.scripts_dir = pth.join(local_dir, 'plot_scripts')
-        self.build_dir = pth.join(local_dir, 'build')
+        self.root_dir = pth.dirname(os.path.abspath(__file__))
+        self.scripts_dir = pth.join(self.root_dir, 'plot_scripts')
+        self.build_dir = pth.join(self.root_dir, 'build')
         self.images_dir = pth.join(self.build_dir, 'images')
+        self.scratch_dir = pth.join(self.build_dir, 'scratch')
 
     def get_plot_names(self):
         return [base_filename(script) for script in self.iter_plot_scripts()]
 
-    def iter_image_sets(self):
+    def iter_image_sets(self, root_dir=None):
         """Yield style name and image sets for each style."""
-        for directory, subdirs, files in os.walk(self.images_dir):
+        root_dir = root_dir or self.images_dir
+
+        for directory, subdirs, files in os.walk(root_dir):
             image_files = filter_image_files(files)
             if len(image_files) > 0:
                 image_files = self._format_filenames(directory, image_files)
@@ -50,7 +63,7 @@ class DiskLayout(object):
             yield script
 
     def _format_filenames(self, directory, files):
-        directory = pth.relpath(directory, self.build_dir)
+        directory = pth.relpath(directory, self.root_dir)
         return [pth.join(directory, fname) for fname in files]
 
 disk = DiskLayout()

@@ -5,8 +5,8 @@ from shutil import rmtree
 import flask
 from flask import request
 
-from .build import build_gallery_table, save_plots
-from .path_utils import in_directory
+from .build import build_gallery_table, save_scratch_plots
+from .path_utils import in_directory, make_directory
 from .web_utils import open_app
 from .path_utils import disk
 
@@ -15,11 +15,11 @@ class GalleryApp(object):
 
     def __init__(self):
         self._app = flask.Flask(__name__)
-        self._template = 'index.html'
         self._input_status = ''
-        self._input_stylesheets = []
+        self._input_stylesheet = ''
 
         self._clear_scratch_directory()
+
         self._plot_names = disk.get_plot_names()
         self._gallery_table = build_gallery_table()
 
@@ -29,6 +29,7 @@ class GalleryApp(object):
     def _clear_scratch_directory():
         if exists(disk.scratch_dir):
             rmtree(disk.scratch_dir)
+        make_directory(disk.scratch_dir)
 
     def _add_url_rules(self, app):
 
@@ -47,19 +48,16 @@ class GalleryApp(object):
         @app.route('/', methods=['POST'])
         def update_styles():
             stylesheet = request.form['input-stylesheet']
-            try:
-                save_plots(stylesheet, base_dir=disk.scratch_dir)
-                self._input_status = ''
-            except ValueError:
-                msg = "Input '{}' does not appear to be a valid stylesheet."
-                self._input_status = msg.format(stylesheet)
+            self._input_status = save_scratch_plots(stylesheet)
+            self._input_stylesheet = stylesheet
             return self.render()
 
     def render(self):
         user_rows = build_gallery_table(src_dir=disk.scratch_dir)
         gallery_table = user_rows + self._gallery_table
-        return flask.render_template(self._template,
+        return flask.render_template('index.html',
                                      input_status=self._input_status,
+                                     input_stylesheet=self._input_stylesheet,
                                      column_headers=self._plot_names,
                                      gallery_table=gallery_table)
 

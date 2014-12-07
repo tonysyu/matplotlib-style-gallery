@@ -9,16 +9,20 @@ from __future__ import print_function
 import os
 import os.path as pth
 from collections import namedtuple
+from warnings import catch_warnings
 
 import matplotlib as mpl
 mpl.use('Agg')
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import style
 
 from .constants import IMAGE_EXT
 from .path_utils import disk, base_filename
 
+
+USER_STYLE_NAME = 'user-style'
 
 Cell = namedtuple('Cell', ['url', 'thumbnail', 'alt'])
 
@@ -46,11 +50,46 @@ def save_plots(stylesheet, image_ext=IMAGE_EXT, base_dir=None):
 
 
 def save_all_plots():
+    """Save plots for all stylesheets known by matplotlib."""
     # Only show styles defined by package, not by user.
     for stylesheet in style.available:
         print("Creating plots for style: {}".format(stylesheet))
         save_plots(stylesheet)
     print("\nDone.")
+
+
+def save_scratch_plots(stylesheet):
+    """Save temporary plots for stylesheet based on user input.
+
+    Parameters
+    ----------
+    stylesheet : str
+        URL pointing to a stylesheet or matplotlibrc key-value pairs.
+
+    Returns
+    -------
+    status : str
+        Status message: Empty-string for success; error message for failures.
+    """
+    status = ''
+
+    if not mpl.is_url(stylesheet):
+        filename = USER_STYLE_NAME + '.' + style.core.STYLE_EXTENSION
+        filename = pth.join(disk.scratch_dir, filename)
+        with open(filename, 'w') as f:
+            f.write(stylesheet)
+        stylesheet = filename
+
+    try:
+        with catch_warnings(record=True) as warnings:
+            save_plots(stylesheet, base_dir=disk.scratch_dir)
+    except ValueError:
+        msg = "Input '{}' does not appear to be a valid stylesheet."
+        status = msg.format(stylesheet)
+    else:
+        status = '' if len(warnings) == 0 else warnings[-1].message
+
+    return status
 
 
 def build_gallery_table(src_dir=None):

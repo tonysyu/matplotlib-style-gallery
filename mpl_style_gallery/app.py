@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import os
+from os.path import exists
+from shutil import rmtree
 
 import flask
 from flask import request
@@ -10,20 +11,24 @@ from .web_utils import open_app
 from .path_utils import disk
 
 
-local_dir = os.path.dirname(os.path.abspath(__file__))
-
-
 class GalleryApp(object):
 
     def __init__(self):
         self._app = flask.Flask(__name__)
         self._template = 'index.html'
-        self._plot_names = disk.get_plot_names()
-        self._gallery_table = build_gallery_table()
         self._input_status = ''
         self._input_stylesheets = []
 
+        self._clear_scratch_directory()
+        self._plot_names = disk.get_plot_names()
+        self._gallery_table = build_gallery_table()
+
         self._add_url_rules(self._app)
+
+    @staticmethod
+    def _clear_scratch_directory():
+        if exists(disk.scratch_dir):
+            rmtree(disk.scratch_dir)
 
     def _add_url_rules(self, app):
 
@@ -43,8 +48,6 @@ class GalleryApp(object):
         def update_styles():
             stylesheet = request.form['input-stylesheet']
             try:
-                msg = "Building plots for '{}'"
-                self._input_status = msg.format(stylesheet)
                 save_plots(stylesheet, base_dir=disk.scratch_dir)
                 self._input_status = ''
             except ValueError:
@@ -63,7 +66,7 @@ class GalleryApp(object):
     def run(self):
         # App opens in the package root since image paths in the table are
         # relative to the package root.
-        with in_directory(local_dir):
+        with in_directory(disk.root_dir):
             open_app(self._app)
 
 

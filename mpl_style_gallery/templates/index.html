@@ -4,10 +4,21 @@
 
   <h1> Matplotlib Style Gallery </h1>
 
+  <p>
+    This gallery compares stylesheets defined in Matplotlib.
+  </p>
+
+  <p>
+    You can also compare a custom stylesheet from a URL, or one defined
+    explicitly by
+    <a href="http://matplotlib.org/users/customizing.html">
+        matplotlibrc parameters</a>,
+    in the text area below:
+  </p>
+
   <form action="." method="POST">
-    <input type="text"
-           name="input-stylesheet"
-           placeholder="URL for stylesheet">
+    <textarea name="input-stylesheet" rows="5" cols="50"
+              placeholder="Stylesheet URL or style key-value pairs"></textarea>
     <input type="submit"
            name="stylesheet-form"
            value="Add stylesheet"

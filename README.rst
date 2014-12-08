@@ -34,8 +34,9 @@ different?
 This app provides two ways to add your own stylesheets:
 
 1. Find a stylesheet online and copy the URL into the app's input area.
-2. Create a stylesheet on the fly using Matplotlib's
+2. Create a stylesheet on the fly by adding valid
    `matplotlibrc syntax <http://matplotlib.org/users/customizing.html>`__.
+   into the input area of the application.
 
 
 Adding your own plot-scripts
@@ -53,10 +54,6 @@ any plotting script into the scripts directory::
 Installation
 ============
 
-You can install this package using ``pip``::
-
-   $ pip install git+https://github.com/tonysyu/matplotlib-style-gallery
-
 To run the gallery, you don't actually need to install this package. You can
 simply grab the source and run the package as a script::
 
@@ -70,6 +67,13 @@ Dependencies
 
 * `Matplotlib <http://matplotlib.org/>`__ >= 1.4
 * `Flask <http://flask.pocoo.org/>`__
+
+
+Roadmap
+=======
+
+This was actually created as a project for me to learn a little bit of
+javascript, so look for future updates with more interactivity.
 
 
 License

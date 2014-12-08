@@ -8,6 +8,7 @@ import argparse
 
 from . import app
 from . import build
+from .path_utils import disk, remove_directory
 
 
 def main():
@@ -20,6 +21,7 @@ def main():
     args = parser.parse_args()
 
     if not args.skip_build:
+        remove_directory(disk.build_dir)
         build.save_all_plots()
 
     app.main()

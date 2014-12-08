@@ -24,6 +24,11 @@ a {
 
 textarea {
     border: #ccc 1px solid;
+}
+
+textarea,
+code,
+pre {
     font-family: "Courier New", Courier, monospace;
 }
 
@@ -69,6 +74,7 @@ table {
     text-shadow: 1px 1px 0px #fff;
     background:#eaebec;
     border:#ccc 1px solid;
+    margin-top: 20px;
 }
 table th {
     padding: 10px;

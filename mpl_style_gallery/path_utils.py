@@ -3,6 +3,7 @@ import os.path as pth
 from contextlib import contextmanager
 from fnmatch import fnmatch
 from glob import glob
+from shutil import rmtree
 
 from .constants import IMAGE_PATTERN
 
@@ -21,6 +22,12 @@ def in_directory(path):
 
 def filter_image_files(files):
     return [fname for fname in files if fnmatch(fname, IMAGE_PATTERN)]
+
+
+def remove_directory(directory):
+    """Remove directory, including all children, if it exists."""
+    if pth.exists(directory):
+        rmtree(directory)
 
 
 class DiskLayout(object):

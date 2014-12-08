@@ -14,13 +14,15 @@ from warnings import catch_warnings
 import matplotlib as mpl
 mpl.use('Agg')
 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import style
 
 from .constants import IMAGE_EXT
 from .path_utils import disk, base_filename
 
+
+plt.rcParams['image.cmap'] = 'gray'
+plt.rcParams['image.interpolation'] = 'none'
 
 USER_STYLE_NAME = 'user-style'
 
@@ -44,7 +46,8 @@ def save_plots(stylesheet, image_ext=IMAGE_EXT, base_dir=None):
 
         for script in disk.iter_plot_scripts():
             image_name = base_filename(script) + image_ext
-            execfile(script)
+            namespace = {}
+            execfile(script, namespace)
             plt.savefig(pth.join(style_dir, image_name))
             plt.close('all')
 
@@ -84,7 +87,8 @@ def save_scratch_plots(stylesheet):
         with catch_warnings(record=True) as warnings:
             save_plots(stylesheet, base_dir=disk.scratch_dir)
     except ValueError:
-        msg = "Input '{}' does not appear to be a valid stylesheet."
+        msg = ("Input '{}' does not appear to be a valid stylesheet.\n"
+               "Verify your network connection and the target stylesheet.")
         status = msg.format(stylesheet)
     else:
         status = '' if len(warnings) == 0 else warnings[-1].message

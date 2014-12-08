@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-from os.path import exists
-from shutil import rmtree
-
 import flask
 from flask import request
 
 from .build import build_gallery_table, save_scratch_plots
 from .path_utils import in_directory, make_directory
 from .web_utils import open_app
-from .path_utils import disk
+from .path_utils import disk, remove_directory
 
 
 class GalleryApp(object):
@@ -27,8 +24,7 @@ class GalleryApp(object):
 
     @staticmethod
     def _clear_scratch_directory():
-        if exists(disk.scratch_dir):
-            rmtree(disk.scratch_dir)
+        remove_directory(disk.scratch_dir)
         make_directory(disk.scratch_dir)
 
     def _add_url_rules(self, app):

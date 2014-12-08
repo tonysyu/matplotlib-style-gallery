@@ -18,24 +18,47 @@ This will fire up a local server with the gallery app running and open your
 web-browser to that page.
 
 
+After you've run the application for first time, you don't need to re-build
+the images for the gallery (unless you've added your own plot scripts), so
+you can skip the plotting as follows::
+
+   $ python -m mpl_style_gallery --skip-build
+
+
 Adding your own styles
 ======================
 
 Comparing the default styles is great, but what if you want to test something
-different.
+different?
+
+This app provides two ways to add your own stylesheets:
+
+1. Find a stylesheet online and copy the URL into the app's input area.
+2. Create a stylesheet on the fly using Matplotlib's
+   `matplotlibrc syntax <http://matplotlib.org/users/customizing.html>`__.
+
+
+Adding your own plot-scripts
+============================
 
 If you have a plot script that you believe would help others decide which is
 the best stylesheet, **pull requests are welcome!**
+
+To test out your own plot script, just grab a copy of this project and drop
+any plotting script into the scripts directory::
+
+   path/to/matplotlib-style-gallery/mpl_style_gallery/plot_scripts/
 
 
 Installation
 ============
 
-::
+You can install this package using ``pip``::
 
    $ pip install git+https://github.com/tonysyu/matplotlib-style-gallery
 
-::
+To run the gallery, you don't actually need to install this package. You can
+simply grab the source and run the package as a script::
 
    $ git clone https://github.com/tonysyu/matplotlib-style-gallery.git
    $ cd matplotlib-style-gallery

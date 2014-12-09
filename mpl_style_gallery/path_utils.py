@@ -51,14 +51,16 @@ class DiskLayout(object):
         self.scratch_dir = pth.join(self.build_dir, 'scratch')
 
     def get_plot_names(self):
-        return [base_filename(script) for script in self.iter_plot_scripts()]
+        names = [base_filename(script) for script in self.iter_plot_scripts()]
+        return sorted(names)
 
     def iter_image_sets(self, root_dir=None):
         """Yield style name and image sets for each style."""
         root_dir = root_dir or self.images_dir
 
         for directory, subdirs, files in os.walk(root_dir):
-            image_files = filter_image_files(files)
+            # Note that sorting here matches that in `get_plot_names`.
+            image_files = sorted(filter_image_files(files))
             if len(image_files) > 0:
                 image_files = self._format_filenames(directory, image_files)
                 style_name = pth.basename(directory)

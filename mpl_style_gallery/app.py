@@ -49,7 +49,8 @@ class GalleryApp(object):
             return self.render()
 
     def render(self):
-        user_rows = build_gallery_table(src_dir=disk.scratch_dir)
+        user_rows = build_gallery_table(src_dir=disk.scratch_dir,
+                                        prevent_cache=True)
         gallery_table = user_rows + self._gallery_table
         return flask.render_template('index.html',
                                      input_status=self._input_status,

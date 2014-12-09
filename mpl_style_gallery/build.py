@@ -9,6 +9,7 @@ from __future__ import print_function
 import os
 import os.path as pth
 from collections import namedtuple
+from time import time
 from warnings import catch_warnings
 
 import matplotlib as mpl
@@ -96,16 +97,24 @@ def save_scratch_plots(stylesheet):
     return status
 
 
-def build_gallery_table(src_dir=None):
+def build_gallery_table(src_dir=None, prevent_cache=False):
     """Return plot-names and table of images.
 
     Each row of the table starts with the style name, and followed by `Cell`
     instances, which have `url`, `thumbnail`, and `alt` attributes.
+
+    Parameters
+    ----------
+    prevent_cache : bool
+        If True, append a timestamp to URLs to prevent caching.
     """
+    query_string = '?{}'.format(time())
     table = []
     for stylesheet, image_list in disk.iter_image_sets(root_dir=src_dir):
         # XXX: `thumbnail` is actually not a thumbnail.
         #      Rescaling would improve loading times.
+        if prevent_cache:
+            image_list = [path + query_string for path in image_list]
         image_cells = [Cell(url=path, thumbnail=path, alt='image')
                        for path in image_list]
         table.append([stylesheet, image_cells])

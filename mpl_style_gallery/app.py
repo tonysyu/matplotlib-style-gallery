@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+import os.path as pth
+
 import flask
 from flask import request
 
 from .build import build_gallery_table, save_scratch_plots
-from .path_utils import in_directory, make_directory
+from .path_utils import make_directory
 from .web_utils import open_app
 from .path_utils import disk, remove_directory
 
@@ -31,11 +32,13 @@ class GalleryApp(object):
 
         @app.route('/static/css/<path:filename>')
         def route_css_files(filename):
-            return flask.send_from_directory('static/css', filename)
+            directory = pth.join(disk.root_dir, 'static/css')
+            return flask.send_from_directory(directory, filename)
 
         @app.route('/build/<path:filename>')
         def route_build_files(filename):
-            return flask.send_from_directory('build', filename)
+            directory = pth.join(disk.root_dir, 'build')
+            return flask.send_from_directory(directory, filename)
 
         @app.route('/')
         def render():
@@ -58,13 +61,12 @@ class GalleryApp(object):
                                      column_headers=self._plot_names,
                                      gallery_table=gallery_table)
 
-    def run(self):
-        # App opens in the package root since image paths in the table are
-        # relative to the package root.
-        with in_directory(disk.root_dir):
-            open_app(self._app)
+    def serve(self, host, port):
+        self._app.run(host=host, port=int(port))
 
+    def open(self):
+        """Serve app and open browser to the app.
 
-def main():
-    app = GalleryApp()
-    app.run()
+        This is intended for running locally.
+        """
+        open_app(self._app)

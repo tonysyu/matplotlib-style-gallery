@@ -1,0 +1,25 @@
+<p>
+  You can also compare a custom stylesheet from a URL, or one defined
+  explicitly by
+  <a href="http://matplotlib.org/users/customizing.html">
+      matplotlibrc parameters</a>,
+  in the text area below:
+</p>
+
+<form action="." method="POST">
+  <textarea name="input-stylesheet" rows="5" cols="50"
+            placeholder="Stylesheet URL or style key-value pairs"
+      >{{ input_stylesheet }}</textarea>
+  <br/>
+  <input type="submit"
+         name="stylesheet-form"
+         value="Add stylesheet"
+         onclick="var spinner = new Spinner({}).spin(document.body);">
+</form>
+
+{% if input_status %}
+  <div class='input-error'>
+    <h2>Error reading stylesheet:</h2>
+    <p> {{ input_status }} </p>
+  </div>
+{% endif %}

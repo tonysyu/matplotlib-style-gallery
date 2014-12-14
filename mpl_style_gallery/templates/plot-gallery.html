@@ -1,0 +1,29 @@
+<table id='gallery'>
+
+  <thead>
+    <tr>
+      <th>Style</th>
+
+      {% for name in column_headers %}
+        <th> {{ name }} </th>
+      {% endfor %}
+
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for label, cells in gallery_table %}
+      <tr>
+        <td> {{ label }} </td>
+        {% for image in cells %}
+          <td>
+            <a href="{{ image.url }}">
+              <img src={{ image.thumbnail }} alt={{ image.alt }}J>
+            </a>
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+
+</table>

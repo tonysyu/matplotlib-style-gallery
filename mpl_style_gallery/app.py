@@ -11,8 +11,9 @@ from .path_utils import disk, remove_directory
 
 class GalleryApp(object):
 
-    def __init__(self):
+    def __init__(self, no_input_stylesheets=False):
         self._app = flask.Flask(__name__)
+        self._allow_inputs = not no_input_stylesheets
         self._input_status = ''
         self._input_stylesheet = ''
 
@@ -56,6 +57,7 @@ class GalleryApp(object):
                                         prevent_cache=True)
         gallery_table = user_rows + self._gallery_table
         return flask.render_template('index.html',
+                                     allow_inputs=self._allow_inputs,
                                      input_status=self._input_status,
                                      input_stylesheet=self._input_stylesheet,
                                      column_headers=self._plot_names,

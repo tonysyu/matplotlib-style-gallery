@@ -9,7 +9,11 @@
     This gallery compares stylesheets defined in Matplotlib.
   </p>
 
-  {% include "stylesheet-input.html" %}
+  {% if allow_inputs %}
+    {% include "stylesheet-input.html" %}
+  {% else %}
+    <p> <em> Note: User input has been disabled </em> <p>
+  {% endif %}
 
   {% include "plot-gallery.html" %}
 

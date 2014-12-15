@@ -19,6 +19,8 @@ def main():
                         help="If set, skip plot-generation step.")
     parser.add_argument('--serve', nargs=2,
                         help="Serve app on hostname and port")
+    parser.add_argument('--no-input', action='store_true',
+                        help="Do not allow input stylesheets.")
 
     args = parser.parse_args()
 
@@ -26,7 +28,7 @@ def main():
         remove_directory(disk.build_dir)
         build.save_all_plots()
 
-    gallery = app.GalleryApp()
+    gallery = app.GalleryApp(args.no_input)
     if args.serve:
         hostname, port = args.serve
         gallery.serve(hostname, port)

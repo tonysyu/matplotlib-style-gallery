@@ -48,6 +48,37 @@ table img {
 
 /*
 ------------------------------------------------------------------------------
+Lightbox implementation adapted from:
+
+    http://webdesign.tutsplus.com/articles/super-simple-lightbox-with-css-and-jquery--webdesign-3528
+------------------------------------------------------------------------------
+*/
+
+/* The lightbox takes up the entire viewport */
+#lightbox {
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#lightbox {
+    background: rgba(0,0,0,.7); /* Transparent black overlay */
+    text-align:center;
+    display: none; /* Hide by default */
+}
+
+#lightbox p {
+    color: #fff;
+    font-size: 12px;
+    text-align: right;
+    max-width: 100%;
+    margin-right: 20px;
+}
+
+/*
+------------------------------------------------------------------------------
 Table styling adapted from:
 
     http://johnsardine.com/freebies/dl-html-css/simple-little-tab/

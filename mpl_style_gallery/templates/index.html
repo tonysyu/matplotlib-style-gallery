@@ -2,6 +2,7 @@
 
 {% block body %}
 
+
   <h1> Matplotlib Style Gallery </h1>
 
   <p>
@@ -12,6 +13,8 @@
 
   {% include "plot-gallery.html" %}
 
+  {% include "lightbox.html" %}
+
   {% include "cmap-note.html" %}
 
   Source code for this gallery available on
@@ -19,7 +22,8 @@
       github
   </a>.
 
-
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="static/js/spin.min.js"></script>
+  <script src="static/js/gallery.js"></script>
 
 {% endblock %}

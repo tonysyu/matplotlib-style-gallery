@@ -12,18 +12,22 @@
   </thead>
 
   <tbody>
+
     {% for label, cells in gallery_table %}
       <tr>
         <td> {{ label }} </td>
+
         {% for image in cells %}
           <td>
-            <a href="{{ image.url }}">
-              <img src={{ image.thumbnail }} alt={{ image.alt }}J>
+            <a class="lightbox-viewable" href="{{ image.url }}">
+              <img src="{{ image.thumbnail }}" alt="{{ image.alt }}"/>
             </a>
           </td>
         {% endfor %}
+
       </tr>
     {% endfor %}
+
   </tbody>
 
 </table>

@@ -13,14 +13,16 @@
 
   <tbody>
 
-    {% for label, cells in gallery_table %}
+    {% for style, cells in gallery_table %}
       <tr>
-        <td> {{ label }} </td>
+        <td> {{ style }} </td>
 
         {% for image in cells %}
           <td>
             <a class="lightbox-viewable" href="{{ image.url }}">
-              <img src="{{ image.thumbnail }}" alt="{{ image.alt }}"/>
+              <img src="{{ image.thumbnail }}"
+                   alt="{{ image.alt }}"
+                   data-style="{{ style }}"/>
             </a>
           </td>
         {% endfor %}

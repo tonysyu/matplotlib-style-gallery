@@ -8,7 +8,6 @@ from __future__ import print_function
 
 import os
 import os.path as pth
-from collections import namedtuple
 from time import time
 from warnings import catch_warnings
 
@@ -19,15 +18,13 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 
 from .constants import IMAGE_EXT
-from .path_utils import disk, base_filename
+from .path_utils import base_filename, disk
 
 
 plt.rcParams['image.cmap'] = 'gray'
 plt.rcParams['image.interpolation'] = 'none'
 
 USER_STYLE_NAME = 'user-style'
-
-Cell = namedtuple('Cell', ['url', 'thumbnail', 'alt'])
 
 
 def save_plots(stylesheet, image_ext=IMAGE_EXT, base_dir=None):
@@ -100,8 +97,8 @@ def save_scratch_plots(stylesheet):
 def build_gallery_table(src_dir=None, prevent_cache=False):
     """Return plot-names and table of images.
 
-    Each row of the table starts with the style name, and followed by `Cell`
-    instances, which have `url`, `thumbnail`, and `alt` attributes.
+    Each row of the table starts with the style name, and followed by
+    dictionaries with 'url', 'thumbnail', 'alt', 'style', and 'type' keys.
 
     Parameters
     ----------
@@ -115,7 +112,8 @@ def build_gallery_table(src_dir=None, prevent_cache=False):
         #      Rescaling would improve loading times.
         if prevent_cache:
             image_list = [path + query_string for path in image_list]
-        image_cells = [Cell(url=path, thumbnail=path, alt='image')
+        image_cells = [dict(url=path, thumbnail=path, alt='image',
+                            style=stylesheet, type=base_filename(path))
                        for path in image_list]
         table.append([stylesheet, image_cells])
     return table

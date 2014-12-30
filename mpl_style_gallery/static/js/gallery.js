@@ -1,7 +1,7 @@
 /*jslint browser:true */
 /*global $, jQuery, alert*/
 
-function mplStyleGallery(table) {
+(function mplStyleGallery() {
     'use strict';
 
     var ESCAPE_KEY = 27,
@@ -12,7 +12,11 @@ function mplStyleGallery(table) {
 
         var $lightbox = $('#lightbox');
 
-        // Click on any lightbox-viewable to open lightbox window.
+        $('input').click(function (event) {
+            $(this).after(new Spinner({}).spin().el);
+        });
+
+        // click on any lightbox-viewable to open lightbox window.
         $('a.lightbox-viewable').click(function (event) {
 
             var imageHref = $(this).attr('href');  // clicked link target
@@ -35,4 +39,4 @@ function mplStyleGallery(table) {
         });
 
     });
-};
+}());

@@ -4,6 +4,11 @@
 (function mplStyleGallery() {
     'use strict';
 
+    /**
+     * Create simple lightbox for viewing images.
+     *
+     * @param {JQuery} Target lightbox div containing single `img` element.
+     */
     function createLightbox($el) {
         var ESCAPE_KEY = 27,
             lightboxFacade;
@@ -15,9 +20,11 @@
             }
         });
 
+        // The public interface for lighbox.
         lightboxFacade = {
+
+            // Replace anchor targets with lightbox display.
             display : function (event) {
-                // Replace anchor targets with lightbox display
 
                 var imageHref = $(this).attr('href');  // clicked link target
 
@@ -25,7 +32,7 @@
                 event.preventDefault();
 
                 // Set lightbox image source to the clicked image.
-                $('#lightbox img').attr('src', imageHref);
+                $el.children('img').attr('src', imageHref);
 
                 $el.show();
             }
@@ -37,11 +44,12 @@
 
         var lightbox = createLightbox($('#lightbox'));
 
+        // Stylesheet input fires spinner since there's a noticeable delay.
         $('input').click(function (event) {
             $(this).after(new Spinner({}).spin().el);
         });
 
-        // click on any lightbox-viewable to open lightbox window.
+        // Click on any lightbox-viewable to open lightbox window.
         $('a.lightbox-viewable').click(lightbox.display);
 
     });

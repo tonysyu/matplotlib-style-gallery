@@ -23,8 +23,18 @@ def color_cycle_plot(ax):
     ax.set_title("# lines = len(color_cycle)")
 
 
-def text_demo(ax):
-    ax.text(0.5, 0.5, 'hello world', ha='center', va='center')
+def circle_and_text_demo(ax):
+
+    # Circles with colors from default color cycle
+    for i, color in enumerate(plt.rcParams['axes.color_cycle']):
+        xy = np.random.normal(size=2)
+        ax.add_patch(plt.Circle(xy, radius=0.3, color=color))
+    ax.axis('equal')
+    ax.margins(0)
+
+    # Text label centered on the axes.
+    ax.text(0.5, 0.5, 'hello world', ha='center', va='center',
+            transform=ax.transAxes)
     ax.set_xlabel('x-label')
     ax.set_ylabel('y-label')
     ax.set_title('title')
@@ -50,7 +60,7 @@ axes = axes.flatten()  # Turn 2 x 2 array to a flat array for easier indexing.
 
 legend_demo(axes[0])
 color_cycle_plot(axes[1])
-text_demo(axes[2])
+circle_and_text_demo(axes[2])
 image_demo(fig, axes[3])
 
 plt.show()

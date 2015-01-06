@@ -5,6 +5,10 @@ Matplotlib Style Gallery
 
 This is a simple Flask application to compare different Matplotlib styles.
 
+A static version of this gallery, without support for generating plots for
+custom inputs, can be found here:
+http://tonysyu.github.io/raw_content/matplotlib-style-gallery/gallery.html
+
 
 Quickstart
 ==========

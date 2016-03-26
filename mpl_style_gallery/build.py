@@ -21,6 +21,9 @@ from .constants import IMAGE_EXT
 from .path_utils import base_filename, disk
 
 
+plt.rcParams['image.cmap'] = 'gray'
+plt.rcParams['image.interpolation'] = 'none'
+
 USER_STYLE_NAME = 'user-style'
 
 

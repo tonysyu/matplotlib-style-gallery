@@ -10,7 +10,10 @@ install_reqs = list(parse_requirements('requirements.txt'))
 requirements = [str(ir.req) for ir in install_reqs]
 
 info = {}
-execfile(join(package_name, '__init__.py'), info)
+init_py = join(package_name, '__init__.py')
+with open(init_py) as f:
+    code = compile(f.read(), init_py, 'exec')
+    exec(code, info)
 
 
 setup(

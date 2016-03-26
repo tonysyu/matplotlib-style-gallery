@@ -44,8 +44,8 @@ def save_plots(stylesheet, image_ext=IMAGE_EXT, base_dir=None):
 
         for script in disk.iter_plot_scripts():
             image_name = base_filename(script) + image_ext
-            namespace = {}
-            execfile(script, namespace)
+            with open(script) as f:
+                exec(compile(f.read(), script, 'exec'), {})
             plt.savefig(pth.join(style_dir, image_name))
             plt.close('all')
 

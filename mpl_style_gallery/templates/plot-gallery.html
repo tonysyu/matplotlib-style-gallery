@@ -16,13 +16,17 @@
     {% for style, cells in gallery_table %}
       <tr>
         <td> {{ style }} </td>
-
+        {% set row_loop = loop %}
         {% for image in cells %}
           <td>
-            <a class="lightbox-viewable" href="{{ image.url }}">
-              <img src="{{ image.thumbnail }}"
-                   alt="{{ image.alt }}"
-                   data-style="{{ style }}"/>
+            <a class="lightbox-viewable" href="{{ image.url }}"
+               data-icol="{{ loop.index0 }}"
+               data-irow="{{ row_loop.index0 }}"
+               data-script="{{ image.script }}"
+               data-style="{{ image.style }}"/>
+
+              <img src="{{ image.thumbnail }}" alt="{{ image.alt }}"/>
+
             </a>
           </td>
         {% endfor %}

@@ -69,7 +69,8 @@ Lightbox implementation adapted from:
     display: none; /* Hide by default */
 }
 
-#lightbox p {
+#lightbox #instructions,
+#lightbox #instructions p {
     color: #fff;
     font-size: 12px;
     text-align: right;

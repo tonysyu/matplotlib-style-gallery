@@ -4,6 +4,9 @@ import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 
 
+np.random.seed(0)  # Set seed so plots look the same.
+
+
 def legend_demo(ax):
     x = np.linspace(0, 1, 30)
     ax.plot(x, np.sin(2*np.pi*x), '-s', label='line')

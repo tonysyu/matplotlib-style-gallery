@@ -3,6 +3,9 @@ import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 
 
+np.random.seed(0)  # Set seed so plots look the same.
+
+
 def histogram_demo(ax):
     # example data
     mu = 100  # mean of distribution

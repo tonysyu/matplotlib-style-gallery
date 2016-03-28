@@ -76,6 +76,7 @@ Lightbox implementation adapted from:
     text-align: right;
     max-width: 100%;
     margin-right: 20px;
+    line-height: 5px;
 }
 
 #lightbox #plot-info,
@@ -83,6 +84,7 @@ Lightbox implementation adapted from:
 #lightbox #plot-info p span {
     color: #fff;
     max-width: 100%;
+    line-height: 5px;
 }
 
 

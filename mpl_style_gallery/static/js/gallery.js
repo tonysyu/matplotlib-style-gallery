@@ -31,11 +31,14 @@
             SELECTED = {
                 iCol: parseInt($elImage.attr('data-icol'), 10),
                 iRow: parseInt($elImage.attr('data-irow'), 10),
-                style: $elImage.attr('data-style'),
-                script: $elImage.attr('data-script'),
             };
-            var imagePath = $elImage.attr('href');
-            $el.children('img').attr('src', imagePath);
+
+            // Update displayed plot info.
+            $('#plot-script').text($elImage.attr('data-script'));
+            $('#plot-style').text($elImage.attr('data-style'));
+
+            // Update displayed image.
+            $el.children('img').attr('src', $elImage.attr('href'));
         }
 
         function incrementAndWrap(value, increment, max) {
@@ -64,9 +67,6 @@
             }
 
             var $elImage = getElementAtIndex(SELECTED.iRow, SELECTED.iCol);
-            SELECTED.style = $elImage.attr('data-style');
-            SELECTED.script = $elImage.attr('data-script');
-
             displayImage($elImage);
         }
 

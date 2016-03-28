@@ -78,6 +78,14 @@ Lightbox implementation adapted from:
     margin-right: 20px;
 }
 
+#lightbox #plot-info,
+#lightbox #plot-info p,
+#lightbox #plot-info p span {
+    color: #fff;
+    max-width: 100%;
+}
+
+
 /*
 ------------------------------------------------------------------------------
 Table styling adapted from:

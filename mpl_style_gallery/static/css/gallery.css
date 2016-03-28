@@ -71,7 +71,7 @@ Lightbox implementation adapted from:
 
 #lightbox #instructions,
 #lightbox #instructions p {
-    color: #fff;
+    color: #ddd;
     font-size: 12px;
     text-align: right;
     max-width: 100%;
@@ -82,7 +82,7 @@ Lightbox implementation adapted from:
 #lightbox #plot-info,
 #lightbox #plot-info p,
 #lightbox #plot-info p span {
-    color: #fff;
+    color: #ddd;
     max-width: 100%;
     line-height: 5px;
 }

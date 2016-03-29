@@ -1,6 +1,7 @@
 import os.path as pth
 
 import flask
+import matplotlib
 from flask import request
 from jinja2 import Environment, FileSystemLoader
 
@@ -59,9 +60,10 @@ class GalleryApp(object):
     def _rendering_kwargs(self):
         return dict(
             allow_inputs=self._allow_inputs,
+            column_headers=self._plot_names,
             input_status=self._input_status,
             input_stylesheet=self._input_stylesheet,
-            column_headers=self._plot_names,
+            matplotlib_version=matplotlib.__version__,
         )
 
     def render(self):

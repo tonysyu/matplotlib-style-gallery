@@ -113,7 +113,7 @@ def build_gallery_table(src_dir=None, prevent_cache=False):
         if prevent_cache:
             image_list = [path + query_string for path in image_list]
         image_cells = [dict(url=path, thumbnail=path, alt='image',
-                            style=stylesheet, script=base_filename(path))
+                            style=stylesheet, type=base_filename(path))
                        for path in image_list]
         table.append([stylesheet, image_cells])
     return table

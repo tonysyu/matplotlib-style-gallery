@@ -2,11 +2,15 @@ import os.path as pth
 
 import flask
 from flask import request
+from jinja2 import Environment, FileSystemLoader
 
 from .build import build_gallery_table, save_scratch_plots
 from .path_utils import make_directory
 from .web_utils import open_app
 from .path_utils import disk, remove_directory
+
+
+LOCAL_DIR = pth.dirname(pth.abspath(__file__))
 
 
 class GalleryApp(object):
@@ -52,16 +56,31 @@ class GalleryApp(object):
             self._input_stylesheet = stylesheet
             return self.render()
 
+    def _rendering_kwargs(self):
+        return dict(
+            allow_inputs=self._allow_inputs,
+            input_status=self._input_status,
+            input_stylesheet=self._input_stylesheet,
+            column_headers=self._plot_names,
+        )
+
     def render(self):
         user_rows = build_gallery_table(src_dir=disk.scratch_dir,
                                         prevent_cache=True)
         gallery_table = user_rows + self._gallery_table
-        return flask.render_template('index.html',
-                                     allow_inputs=self._allow_inputs,
-                                     input_status=self._input_status,
-                                     input_stylesheet=self._input_stylesheet,
-                                     column_headers=self._plot_names,
-                                     gallery_table=gallery_table)
+
+        kwargs = self._rendering_kwargs()
+        kwargs['gallery_table'] = gallery_table
+        return flask.render_template('index.html', **kwargs)
+
+    def render_static(self):
+        loader = FileSystemLoader(pth.join(LOCAL_DIR, 'templates'))
+        env = Environment(loader=loader)
+        template = env.get_template('index.html')
+
+        kwargs = self._rendering_kwargs()
+        kwargs['gallery_table'] = self._gallery_table
+        return template.render(**kwargs)
 
     def serve(self, host, port):
         self._app.run(host=host, port=int(port))

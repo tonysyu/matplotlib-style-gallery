@@ -1,2 +1,2 @@
 matplotlib>=1.4
-Flask==0.10
+Flask==1.0
